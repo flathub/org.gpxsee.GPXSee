@@ -15,9 +15,12 @@ rename-mime-file: gpxsee.xml
 rename-appdata-file: gpxsee.appdata.xml
 modules:
   - name: gpxsee
-    buildsystem: qmake
-    post-install:
+    buildsystem: simple
+    build-commands:
       - lrelease gpxsee.pro
+      - qmake PREFIX=/app gpxsee.pro
+      - make -j $FLATPAK_BUILDER_N_JOBS
+      - make install
     sources:
       - type: archive
         url: https://github.com/tumic0/GPXSee/archive/refs/tags/16.16.tar.gz
